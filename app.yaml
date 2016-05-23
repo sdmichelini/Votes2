@@ -1,0 +1,39 @@
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: true
+application: zeta-mu-votes
+
+handlers:
+- url: /bower_components
+  static_dir: bower_components
+- url: /static
+  static_dir: static
+- url: /admin
+  secure: always
+  script: admin_controller.app
+  login: admin
+- url: /admin/.*
+  secure: always
+  script: admin_controller.app
+- url: /api/poll
+  secure: always
+  script: index_controller.app
+  login: required
+- url: /
+  secure: always
+  script: index_controller.app
+  login: required
+- url: /worker/.*
+  secure: always
+  script: worker.app
+  login: admin
+- url: /.*
+  script: index_controller.app
+  login: required
+
+libraries:
+- name: webapp2
+  version: latest
+- name: jinja2
+  version: latest

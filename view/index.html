@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block content %}
+<div class='container-fluid text-xs-center heading'>
+	<h1>Zeta Mu Votes</h1>
+</div>
+<div class='container'>
+	<div class='row'>
+		<div class='col-md-3 hidden-sm-down'>
+			<div class='card' id='poll-results-card'>
+				<div class='card-block'>
+					<h4 class='card-title text-xs-center'>Poll Results</h4>
+
+				</div>
+				<div id='poll-results'>
+
+				</div>
+			</div>
+			<div class='card' id='meeting-card'>
+				<div class='card-block'>
+					<h4 class='card-title text-xs-center'>Meeting</h4>
+					<div id='meeting-results'>
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class='col-md-6 col-sm-12'>
+			<div class='card'>
+				{% if polls|length > 0 %}
+					<div class='card-block'>
+						<h3 class='card-title text-xs-center'>{{ polls[0].title }}</h4>
+						<p class='card-text text-xs-justify'>
+							{{ polls[0].description }}
+						</p>
+						<div class='btn-group btn-group-lg btn-group-justified' role='group' aria-label='...'>
+							<div class='btn-group btn-group-lg' role='group'>
+								<button type='button' class='btn btn-success' id='btn-yes'>Yes</button>
+							</div>
+							<div class='btn-group btn-group-lg' role='group'>
+								<button type='button' class='btn btn-danger' id='btn-no'>No</button>
+							</div>
+							<div class='btn-group btn-group-lg' role='group'>
+								<button type='button' class='btn btn-warning' id='btn-abstain'>Abstain</button>
+							</div>
+						</div>
+						<p id='cur-vote'>
+						</p>
+					</div>
+				{% else %}
+					<div class='card-block alert-danger'>
+						<h3 class='card-title text-xs-center'>Voting Closed</h4>
+						<p class='card-text text-xs-justify'>
+							There is no vote presently on the table.
+						</p>
+					</div>
+				{% endif %}
+			</div>
+			<div class='card'>
+				<div class='card-block'>
+					<h3 class='card-title text-xs-center'>Points</h3>
+					<p id='grey-accent'>
+						Use the points site to view the status of points for housing selection.
+					</p>
+					<a href='#' class='btn btn-primary' role='button'>Enter Points Site</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<a href={{ logout }}>Logout</a>
+</div>
+{% endblock %}
+{% block script %}
+<script type='text/javascript' src='/static/js/vote.js'></script>
+<script type='text/javascript' src='/static/js/components/polls.js'></script>
+<script type='text/javascript' src='/static/js/components/meeting.js'></script>
+{% endblock %}

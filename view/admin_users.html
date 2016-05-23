@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+<div class='container-fluid text-xs-center heading'>
+	<h1>Zeta Mu Votes - User Management</h1>
+</div>
+<div class='container'>
+	<div class='col-md-3 hidden-sm-down'>
+		<div class='card'>
+			<div class='card-block'>
+				<h4 class='card-title text-xs-center'>Add User</h4>
+				<p class='card-text' id='grey-accent'>
+					Use this to create a user for the voting system. Note all fields are required to create a new user.
+				</p>
+				<div class='alert alert-danger' id='create-error' style='display: none'></div>
+				<form id='create-user'>
+					<fieldset class='form-group'>
+						<label for='username'>Name</label>
+						<input type='text' class='form-control' id='username' placeholder='Name' required>
+					</fieldset>
+					<fieldset class='form-group'>
+						<label for='email'>Google E-Mail</label>
+						<input type='email' class='form-control' id='email' placeholder='E-Mail' required>
+					</fieldset>
+					<fieldset class='form-group'>
+						<label for='grad-year'>Graduation Year</label>
+						<input type='number' class='form-control' id='grad-year' min='2017' placeholder='Grad Year' required>
+					</fieldset>
+					<button type='submit' class='btn btn-success' id='create-user-2'>Create</button>
+				</form>
+			</div>
+		</div>
+		<div class='card'>
+			<div class='card-block'>
+				<h4 class='card-title text-xs-center'>Admin Panel</h4>
+				<p class='card-text' id='grey-accent'>
+					Return to the site's administrator panel.
+				</p>
+				<a href='/admin' class='btn btn-primary' role='button'>Admin Panel</a>
+			</div>
+		</div>
+	</div>
+	<div class='col-md-9 col-sm-12'>
+		<div class='text-xs-center'><h3>Current Users</h3></div>
+		<ul class='list-group'>
+		<div id='user-data'>
+		{% for user in users %}
+			<li class='list-group-item'>{{ user.name }} - <span id='grey-accent'>{{ user.email }}</span>
+				<button type='button' class='close' aria-label="Delete User">
+					<span aria-hidden='true'>&times;</span>
+				</button>
+			</li>
+		{% endfor %}
+		</div>
+		</ul>
+		<p class='card-text' id='grey-accent'>
+			The above users are allowed to vote on all polls in the system given that they are present at a meeting and have voting abilities.
+		</p>
+	</div>
+</div>
+{% endblock %}
+{% block script %}
+<script type='text/javascript' src='/static/js/user.js'></script>
+{% endblock %}

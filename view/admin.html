@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block content %}
+<div class='container-fluid text-xs-center heading'>
+	<h1>Zeta Mu Votes</h1>
+</div>
+<div class='container'>
+	<div class='row'>
+		<div class='col-md-3 hidden-sm-down'>
+			<div class='card'>
+				<div class='card-block'>
+					<h4 class='card-title text-xs-center'>Open Votes</h4>
+					<h5 id='open-title'></h5>
+					<p class='card-text text-xs-justify' id='open-description'>
+						There are no open votes to view.
+					</p>
+					<button type='button' class='btn btn-danger' id='close-poll'>Close Poll</button>
+				</div>
+			</div>
+			<div class='card' id='poll-results-card'>
+				<div class='card-block'>
+					<h4 class='card-title text-xs-center'>Poll Results</h4>
+					<div id='poll-results'>
+
+					</div>
+				</div>
+
+			</div>
+			<div class='card'>
+				<div class='card-block'>
+					<h4 class='card-title text-xs-center'>Meetings</h4>
+
+					<div id='js-meeting-open' style='display: none'>
+						<p class='card-text' id='grey-accent'>
+							There is currently a meeting open.
+						</p>
+						<a href='/admin/attendence' class='btn btn-primary' role='button'>Attendence</a>
+						<button type='button' class='btn btn-danger m-t-1' role='button' id='close-meeting'>Close Meeting</button>
+					</div>
+
+					<div id='js-meeting-closed' style='display: none'>
+						<p class='card-text' id='grey-accent'>
+							Use this to create a new meeting and take attendence for the meeting.
+						</p>
+						<button type='button' class='btn btn-primary' role='button' id='create-meeting'>Create Meeting</button>
+					</div>
+
+				</div>
+			</div>
+			<div class='card'>
+				<div class='card-block'>
+					<h4 class='card-title text-xs-center'>User Management</h4>
+					<p class='card-text' id='grey-accent'>
+						Go to the user management portal to add users to the system.
+					</p>
+					<a href='/admin/users' class='btn btn-primary' role='button'>Manage Users</a>
+				</div>
+			</div>
+		</div>
+		<div class='card col-md-9 col-sm-12'>
+			<div class='card-block'>
+				<h3 class='card-title text-xs-center'>Create New Poll</h3>
+				<p class='card-text' id='grey-accent'>
+					Create a new poll for the users to vote on.
+				</p>
+				<form id='create-poll' action='' method='post'>
+					<fieldset class='form-group'>
+						<label for='pollTitle'>Poll title</label>
+						<input type='text' class='form-control' id='poll-title' placeholder='Poll Title' required>
+					</fieldset>
+					<fieldset class='form-group'>
+						<label for='pollDescription'>Poll description</label>
+						<textarea class='form-control' id='poll-description' rows='3'required></textarea>
+					</fieldset>
+					<button type='submit' class='btn btn-success' id='create-poll'>Submit</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+{% block script %}
+<script type='text/javascript' src='/static/js/admin.js'></script>
+<script type='text/javascript' src='/static/js/components/polls.js'></script>
+{% endblock %}

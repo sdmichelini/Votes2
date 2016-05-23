@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+<div class='container-fluid text-xs-center heading'>
+	<h1>Zeta Mu Votes - Attendence</h1>
+</div>
+<div class='container'>
+	<div class='row'>
+		<div class='col-md-8 col-md-offset-2 col-sm-12'>
+			<h3 class='text-xs-center m-t-1'>Attendence</h3>
+			<p id='grey-accent'>
+				Take attendence for people in a meeting using this module. Put the mark next to them for present, excused, or unexecused. Defaults to unexecused.
+			</p>
+			{% for user in users %}
+				<li class='list-group-item' style='height: 4em;'>{{ user.name }} - <span class='users' id='grey-accent'>{{ user.email }}</span>
+					<div class='btn-group pull-xs-right' data-toggle="buttons">
+						<label class='btn btn-success-outline'>
+							<input type='radio' name={{ user.email }} id={{ user.email|replace("@","")|replace(".","") + '1'}} autocomplete='off'>P
+						</label>
+						<label class='btn btn-primary-outline'>
+							<input type='radio' name={{ user.email }} id={{ user.email|replace("@","")|replace(".","") + '2'}} autocomplete='off'>E
+						</label>
+						<label class='btn btn-danger-outline active'>
+							<input type='radio' name={{ user.email }} id={{ user.email|replace("@","")|replace(".","") + '3'}} autocomplete='off' checked>U
+						</label>
+					</div>
+				</li>
+			{% else %}
+				<p>
+					There are no users in the system. Please visit the <a href='/admin/users'>User Management Page</a> to add users.
+				</p>
+			{% endfor %}
+
+			<button type='button' id='do_attendence' class='btn btn-success m-t-1'>Take Attendence</button>
+
+		</div>
+	</div>
+
+
+
+</div>
+{% endblock %}
+{% block script %}
+<script type='text/javascript' src='/static/js/attendence.js'></script>
+{% endblock %}
