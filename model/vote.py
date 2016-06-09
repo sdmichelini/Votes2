@@ -9,10 +9,11 @@ This is an in memory cache of votes
 
 class Vote(ndb.Model):
 	#who voteds email
-	user = ndb.StringProperty()
+	user = ndb.StringProperty(required = True)
 	#vote
-	vote = ndb.IntegerProperty()
-
+	vote = ndb.IntegerProperty(required = True)
+	#When the vote occured
+	when = ndb.DateTimeProperty(auto_now_add = True)
 
 
 #Dictionary
@@ -34,9 +35,10 @@ def vote(user, vote):
 		#Log Vote
 		logging.error('{} voted {}'.format(user,vote))
 		#Set it in the cache
-		USER_VOTES[user] = vote
+		#USER_VOTES[user] = vote
+		new_vote = Vote(user = user, vote = int(vote))
+		new_vote.put()
 
-		#insert_or_update_user(user, vote)
 
 		return True
 	else:
@@ -47,7 +49,7 @@ def vote(user, vote):
 def reset_vote():
 	USER_VOTES.clear()
 	#Drop the database
-	#ndb.delete_multi(Vote.query().fetch(keys_only = True))
+	ndb.delete_multi(Vote.query().fetch(keys_only = True))
 
 def commit_votes():
 	poll = Poll.get_open_polls_query().get()
@@ -64,6 +66,12 @@ def get_votes():
 	yes = 0
 	no = 0
 	abstain = 0
+	for vote in Vote.query().fetch():
+		if vote.user in USER_VOTES:
+			if USER_VOTES[vote.user].when < vote.when:
+				USER_VOTES[vote.user] = vote.vote
+		else:
+			USER_VOTES[vote.user] = vote.vote
 	for key,value in USER_VOTES.items():
 		logging.error('User: {} voted: {}'.format(key, value))
 		if int(value) == 0:
